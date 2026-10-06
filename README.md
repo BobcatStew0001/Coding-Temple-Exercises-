@@ -40,3 +40,5 @@ Repo Structure
 Notes
 
 These are learning exercises, not production code. Some files may contain intentional errors or commented-out sections that I used to study how different errors behave and how to fix them.
+
+The Guided Exercise is self-explanatory 
