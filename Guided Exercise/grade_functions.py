@@ -50,3 +50,4 @@ print(display_report(scores))
 honor_scores = [90, 98, 97, 100, 99, 95]
 
 print(display_report(honor_scores))
+
