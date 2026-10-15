@@ -1,42 +1,70 @@
-item1_name = "Notebook"
-item1_price = float("4.99") #This was a string but because it deals with money I made it a float to include the decimal
-item1_qty = int("2") #This was a string as well but needed to be cast as an int to get the qty of the item. 
-item1_total = item1_price * item1_qty
+from decimal import Decimal, ROUND_HALF_UP
+
+STORE_NAME = "The Shop Around the Corner"
+TAX_RATE = Decimal("0.075")  # 7.5% sales tax
+WIDTH = 30
+NAME_WIDTH = 10
+CENT = Decimal("0.01")
+
+# Decimal is built from strings so money values are stored exactly (float can't hold 4.99 exactly).
+ITEMS = [
+    ("Notebook", Decimal("4.99"), 2),
+    ("Pen Pack", Decimal("7.50"), 1),
+    ("Backpack", Decimal("34.99"), 1),
+]
 
 
-
-item2_name = "Pen Pack"
-item2_price = float("7.50") #I did the same on line 9 and 10 as 2 and 3 for the same reason mentioned above. 
-item2_qty = int("1")
-item2_total = item2_price * item2_qty
-
-item3_name = "Backpack"
-item3_price = float("34.99") #I also had to repeat it on these lines 
-item3_qty = int("1")
-item3_total = item3_price * item3_qty
-
-subtotal = item1_total + item2_total + item3_total
-
-tax_rate = float("0.075") #7.5% sales tax
-tax_total = subtotal * tax_rate
-
-total = subtotal + tax_total
+def money(amount):
+    """Format as $X.XX with the $ attached, so the whole string can be right-aligned."""
+    return f"${amount:.2f}"
 
 
+def to_cents(amount):
+    """Round a Decimal to the nearest cent, rounding halves up like a cash register."""
+    return amount.quantize(CENT, rounding=ROUND_HALF_UP)
 
-border = "=" * 30 #This is where I used the str multiplication trick. I never knew about it and wonder is it something similar in C#?
-divder = "-" * 30 #It's a pretty neat trick. 
 
-print(border)
-print("  The Shop Around the Corner")
-print(border)
+def validate(items):
+    for name, price, qty in items:
+        if price < 0:
+            raise ValueError(f"{name}: price cannot be negative ({price})")
+        if qty <= 0:
+            raise ValueError(f"{name}: quantity must be at least 1 ({qty})")
 
-print(f"{item1_name}    ${item1_price:.2f} x {item1_qty}    ${item1_total:.2f}") #I added $ and :.2f to all the money values. 
-print(f"{item2_name}    ${item2_price:.2f} x {item2_qty}    ${item2_total:.2f}")
-print(f"{item3_name}   ${item3_price:.2f} x {item3_qty}   ${item3_total:.2f}")# Alignment was tricky & took some trial & error
 
-print(divder)
-print(f"Subtotal:               ${subtotal:.2f}")
-print(f"Tax (7.5%):              ${tax_total:.2f}")
-print(divder)
-print(f"Total:                  ${total:.2f}")
+def print_receipt(items):
+    border = "=" * WIDTH  # This is where I used the str multiplication trick. (C# equivalent: new string('=', 30))
+    divider = "-" * WIDTH
+
+    print(border)
+    print(STORE_NAME.center(WIDTH))
+    print(border)
+
+    if not items:
+        print("No items".center(WIDTH))
+        return
+
+    for name, price, qty in items:
+        line_total = price * qty
+        # Format specs handle alignment: < left-aligns, > right-aligns, the number is the column width.
+        # Names longer than NAME_WIDTH are truncated so they can't push the columns out of line.
+        print(f"{name[:NAME_WIDTH]:<{NAME_WIDTH}} {money(price):>7} x{qty:>2} {money(line_total):>7}")
+
+    subtotal = sum(price * qty for _, price, qty in items)
+    tax = to_cents(subtotal * TAX_RATE)  # Tax is rounded once, so subtotal + tax always equals the printed total.
+    total = subtotal + tax
+
+    print(divider)
+    print(f"{'Subtotal:':<20}{money(subtotal):>10}")
+    print(f"{f'Tax ({TAX_RATE:.1%}):':<20}{money(tax):>10}")
+    print(divider)
+    print(f"{'Total:':<20}{money(total):>10}")
+
+
+def main():
+    validate(ITEMS)
+    print_receipt(ITEMS)
+
+
+if __name__ == "__main__":
+    main()
