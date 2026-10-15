@@ -1,0 +1,33 @@
+
+   I found the 4 errors without using AI.
+
+1) def calculate_stats(numbers) <Original>
+   def calculate_stats(numbers): <Corrected> I just added a colon to the end.
+   This was a Syntax Error
+
+2) if num > average <Original>
+   if num > average: <Corrected> I just added a colon to the end of this as well.
+   This was also a Syntax Error
+
+3) scores = [85, 92, 78, 95, 88, "70", 93] <Original>
+   scores = [85, 92, 78, 95, 88, 70, 93] <Corrected> It was a string and I removed the "" and made it a int
+   This was a Type Error
+
+4) print(f"Average: {result[average]}") <Original>
+   print(f"Average: {result['average']}") <Corrected> It was calling a variable from earlier in the program and needed the '' to find the variable.
+   This was a Name Error
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
