@@ -1,0 +1,3 @@
+Line 5: Originally had this in the wrong position. I wrote it after the with and got errors and worked out the logic
+Line 9: I had a print instead of return
+Line 10: I had except:FileNotFindError: the extra :(colon) caused error
