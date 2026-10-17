@@ -2,6 +2,8 @@ import csv
 
 #Function 1
 def load_students(filepath):
+    """Load student records from a CSV file. filepath (str): Path to the CSV file of student data.
+    Returns list[dict]: One dict per row, keyed by the CSV header. Returns an empty list if the file cannot be found."""
     try:
         with open(filepath, newline="") as file: #Looks up the file
             reader = csv.DictReader(file)
@@ -14,6 +16,8 @@ def load_students(filepath):
 #Function 2
 
 def calculate_average(grades):
+    """Calculate the average of a list of grades, skipping blank entries. grades (list[str]): Grade values as strings; empty strings are ignored.
+    Returns: float | None: The average rounded to one decimal place, or None if there are no valid grades."""
     valid_grades = []
     for grade in grades:
         if grade != "": #Empty string we skip adding it not an empty string we add it to the list
@@ -24,6 +28,8 @@ def calculate_average(grades):
     return round(average, 1)
 
 def get_letter_grade(average):
+    """Convert a numeric average to a letter grade.average (float | None): The student's numeric average.
+    Returns: str: "A", "B", "C", "D", or "F" on a 90/80/70/60 scale, or "N/A" if the average is None"""
     if average is None:
         return "N/A"
     elif average >= 90:
@@ -38,6 +44,12 @@ def get_letter_grade(average):
         return "F"
 
 def generate_report(students):
+    """Build a summary report of averages and letter grades for all students.students (list[dict]):
+        Student records with "student_name", "math", "science", "english", and "history" keys. Returns: dict: Report containing "total_students", "class_average",
+        "highest_average", "lowest_average", "grade_distribution" (letter
+        grade counts), and "students" (a list of dicts with "name",
+        "average", and "grade"). The class stats are None if no student
+        has valid grades."""
     results = []
     distribution = {"A": 0, "B": 0, "C": 0, "D": 0, "F": 0, "N/A": 0}
 
@@ -67,6 +79,9 @@ def generate_report(students):
         "students": results,}
 
 def write_report(report, filepath):
+    """Write a formatted grade report to a text file. The file includes a summary, the grade distribution, the top 5students,
+        and each student's individual results. report (dict): Report returned by generate_report(). filepath (str):
+        Path of the text file to write (overwritten if it exists)."""
     with open(filepath, "w") as file:
         file.write('=' * 40 + "\n")
         file.write(f"{'Student Grade Report':^40}\n")
@@ -117,6 +132,7 @@ def write_report(report, filepath):
 
 #Testing
 def main():
+    """Load student data, print a summary to the console, and write grade_report.txt."""
     print("Loading student data...")
     students = load_students("data/students.csv")
     print(f"Loaded {len(students)} students.")
