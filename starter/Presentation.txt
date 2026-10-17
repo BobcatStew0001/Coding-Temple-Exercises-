@@ -1,0 +1,38 @@
+Notes for my presentation.
+
+1) Show your code.
+    Walk through grade_tracker.py & explain one function in detail.
+calculate_average(grades)
+step 1- create a empty list (valid_grades) to store the information.
+step 2- I created a for loop and nested an if statement inside it. The purpose was to go through and add all
+    grades to the list valid grades. I used the append method
+step 3- I created a 2nd if statement in the function to filter out the empty strings in the csv file. I used the length
+    method. If the length of the item was equal to zero (an empty string) then do not add it to the list.
+step 4- I used created the variable average and assigned it the value of sum(valid_grades) divided by len(valid_grades)
+    As you can see I used the sum method and the length method on the list valid grades to get the averages of the list and
+    store it in the variable. Lastly I wrote my return statement and used the round method to limit the data returned to 1 decimal
+    place.
+2) Explain one debugging example.
+One example I ran into was a KeyError: 'grade' that I ran into the first time I ran the program with the provided main().
+When I ran the program it started fine and loaded the students and printed the summary and grade distribution. Then it
+crashed when it reached the "Top 5 Students" section. How I figured out the error. The traceback pointed to the line in main()
+that prints the top 5: print(f"  {s['name']:<20} {s['average']:.1f}  ({s['grade']})"). A KeyError means the code asked a dictionary
+for a key it doesn't have. main() was looking up 'grade' in 3 places: generate_report where the dictionary is built, and twice in write_report
+where it's read. In my code I had it written as 'letter_grade' instead of 'grade'. I made the change and the program ran start to finish.
+I also had smaller syntax errors that I caught as I was writing the functions. They were simple indention errors and expecting : and ).
+
+#You can complete the 3 and 4 by cloning the file from my GitHub repo, copying and pasting the commands into the your terminal inside your IDE.
+3) Demo the program.
+    (Windows) python grade_tracker.py
+    (Mac/Linux) python3 grade_tracker.py
+
+4) Show the output file.
+    (Windows) Get-Content grade_report.txt
+    (Mac/Linux) cat grade_report.txt
+
+5) Explain requirements.txt
+ In a normal Python project requirements.txt list the outside packages the program needs such as packages installed with pip. This makes it easy for anyone who downloads the project
+ to install everything at once with a simple terminal command: pip install -r requirements.txt. In grade_tracker.py requirements is empty because the program does not use any outside
+ packages. The only module it imports is csv which is part of Python's built in library and doesn't need to be installed. The program reads data from the local student.csv and writes
+ the results to grade_report.txt
+
