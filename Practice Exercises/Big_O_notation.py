@@ -8,7 +8,60 @@ famous_books = [
     {"title": "Pride and Prejudice", "author": "Jane Austen"},
     {"title": "The Hobbit", "author": "J.R.R. Tolkien"}
 ]
+# Function A
+def get_first(data):
+    return data[0]
+#This is Constant Time O(1), Because it is accessing the data by the index.
 
+# Function B
+def count_matches(data, target):
+    count = 0
+    for item in data:
+        if item == target:
+            count += 1
+    return count
+#This is Linear Time O(n), It will scale with the size of the input.
+# If you were looking for a title of a book in a stack of books it would look at every
+# title to find the one you are looking for in the stack. Double the input double the work
+
+# Function C
+def all_pairs(data):
+    pairs = []
+    for i in range(len(data)):
+        for j in range(len(data)):
+            pairs.append((data[i], data[j]))
+    return pairs
+#This is Quadratic Time O(n2) This is similar but different to Linear time.
+# It looks at each piece of data in but it also compares it to every other item.
+# So if you were looking for a title of a book it
+# look would compare the title you are looking for to every
+# other title in the stack of books. Double the input, Quadruple the work.
+
+# Function D
+def mystery(n):
+    count = 0
+    while n > 1:
+        n = n // 2
+        count += 1
+    return count
+#This uses Logarithmic O(log n).
+# This is complicated with the stack of books.
+# If you have a stack of 100 books in alphabetical order
+# it would start in the middle of the stack. If you are looking for
+# To Kill a Mockingbird and the middle of the stack
+# landed on Robinson Crusoe. R is before
+# T so it would discard the everything up to the R
+# and then start over with the second cut and so on and so on. This is how binary works.
+
+# Function E
+def process(data):
+    total = sum(data)           # Line 1
+    sorted_data = sorted(data)  # Line 2
+    first = data[0]             # Line 3
+    return total, sorted_data, first
+#This is Linearithmic, Time O(n log n), it is n * log n and is the O(n) and O(log n) combined.
+#This function has 3 steps and the slowest is sorted, sorted being the slowest is the one
+#that sets the speed for the function.
 
 def books(book_list, title):
     for book in book_list:
