@@ -1,0 +1,29 @@
+# Function A
+def reverse_string(s):
+    return s[::-1]
+    # O(n), Because the memory scales to the size of the data input. This is because it takes the string and returns a new
+    string in reverse order.
+
+# Function B
+def count_letters(text):
+    counts = {}
+    for char in text:
+        counts[char] = counts.get(char, 0) + 1
+    return counts
+    O(n). Memory scales to the size of the data input. This takes a string and turns it into a new dict. The dict only
+    gets unique char as count loops through the data
+
+# Function C
+def matrix_identity(n):
+    return [[1 if i == j else 0 for j in range(n)] for i in range(n)]
+    O(n^2) It returns a grid that is where we get the n^2. If you pass 3 in for n then you get a 3 rows
+    with 3 values per row total is 9.
+
+# Function D
+def running_sum(numbers):
+    total = 0
+    for num in numbers:
+        total += num
+    print(total)
+    O(1) The total grows as the loop runs but the data inside total only increases it will always be one number. print only gives you the value
+    of the variable.
