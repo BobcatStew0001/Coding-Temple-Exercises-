@@ -1,12 +1,15 @@
 class Book:
     """Manages a collection of Books"""
-    def __init__(self, title, author, year, checked_out = False):
+    def __init__(self, title, author, year, checked_out = False, pages = 0):
         self.title = title
         self.author = author
         if not isinstance(year, int) or year <= 0:
             raise ValueError("Year must be positive")
         self.year = year
         self.checked_out = checked_out
+        if not isinstance(pages, int) or pages < 0:
+            raise ValueError("Pages must be positive")
+        self.pages = pages
 
     def check_out(self):
         """Checks books out of the collection"""
@@ -34,6 +37,30 @@ class Book:
         else:
             status = "Available"
         return(f"{title}\n{author}\n{status}")
+
+    def __eq__(self, other):
+        """Compares two books by title and author"""
+        if self.title == other.title and self.author == other.author:
+            return True
+        else:
+            return False
+
+
+    def __lt__(self, other):
+        """Checks to see if one title comes before the other title"""
+        if self.title.lower() < other.title.lower():
+            return True
+        else:
+            return False
+
+    def __len__(self):
+        """Checks length of books by pages"""
+        return(self.pages)
+
+    def __contains__(self, item):
+        """Looks for words inside the title"""
+        return item.lower() in self.title.lower()
+
 
 class EBook(Book):
     """Manages a collection of EBooks"""
@@ -127,3 +154,31 @@ available = catalog.get_available()
 print(f"Available: {len(available)} books")
 
 catalog.summary()
+
+print("********* TESTING CODE *********")
+print("__________________________________")
+print("        STRETCH CHALLENGE")
+
+book_one = Book("AI Engineering", "Chip Huyen", 2025, pages=652)
+book_two = Book("Clean Code", "Robert Martin", 2008, pages=464)
+book_three = Book("Python Crash Course", "Eric Matthes", 2019, pages=544)
+
+# Same title and author as book_one, to test __eq__
+book_copy = Book("AI Engineering", "Chip Huyen", 2025)
+
+# Deliberately OUT of alphabetical order so sorted() has work to do
+books = [book_three, book_one, book_two]
+
+# __lt__ via sorted()
+print("Original order:", books)
+print("Sorted order:  ", sorted(books))
+
+print(book_one == book_copy)  # True: same title and author
+print(book_one == book_two)  # False: different books
+
+# __len__
+print(len(book_one))  # 652
+
+# __contains__
+print("engineering" in book_one)  # True: lowercase still matches "Engineering"
+print("Python" in book_one)  # False: not in "AI Engineering"
