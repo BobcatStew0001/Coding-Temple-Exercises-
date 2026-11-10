@@ -9,6 +9,7 @@ class Node:
     def __init__(self, value):
         self.value = value  # The data this node holds
         self.next = None  # Reference to the next node(none = end of chain)
+        self.prev = None
 
     def __repr__(self):
         return f"Node ({self.value})"
@@ -88,6 +89,8 @@ my_list.insert_start(3)
 my_list.insert_start(2)
 my_list.insert_start(1)
 my_list.insert_end(4)
+
+
 my_list.display()
 print("------Search------")
 print(my_list.search(3))
