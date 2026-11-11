@@ -67,17 +67,21 @@ class LinkedList:
             current = current.next
         return False
 
-    def delete(self):
-        """Takes no value and removes the first node. Return True/False. O(1) time"""
+
+    def delete(self, target):
+        """Remove the first node with a given value that matches the target. Return True/False. O(n) time"""
         current = self.head
         if current is None:
             return False
-        self.head = current.next
-        if self.head is not None:
-            self.head.prev = None
-        else:
-            self.tail = None
-        return True
+        if current.value == target:
+            self.head = current.next
+            return True
+        while current.next:
+            if current.next.value == target:
+                current.next = current.next.next
+                return True
+            current = current.next
+        return False
 
     def length(self):
         """Return the number of nodes in the list"""
