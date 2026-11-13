@@ -104,9 +104,63 @@ print("------Search------")
 print(my_list.search(3))
 print(my_list.search(9))
 print("------Delete-------")
-my_list.display()
-print(my_list.delete())  # Comment out from print Delete to print Test to test empty linked list
-my_list.display()
+
+# Case 1: Empty list
+empty_list = LinkedList()
+print(empty_list.delete(1))              # False
+print(empty_list.to_list())              # []
+
+# Case 2: Head match
+head_test = LinkedList()
+for value in [1, 2, 3]:
+    head_test.insert_end(value)
+print(head_test.delete(1))               # True
+print(head_test.to_list())               # [2, 3]
+print(head_test.head)                    # Node (2)
+
+# Case 3: Middle match
+middle_test = LinkedList()
+for value in [1, 2, 3]:
+    middle_test.insert_end(value)
+print(middle_test.delete(2))             # True
+print(middle_test.to_list())             # [1, 3]
+
+# Case 4: Tail match
+tail_test = LinkedList()
+for value in [1, 2, 3]:
+    tail_test.insert_end(value)
+print(tail_test.delete(3))               # True
+print(tail_test.to_list())               # [1, 2]
+print(tail_test.head.next.next)          # None
+
+# Case 5: Not found
+missing_test = LinkedList()
+for value in [1, 2, 3]:
+    missing_test.insert_end(value)
+print(missing_test.delete(99))           # False
+print(missing_test.to_list())            # [1, 2, 3]
+
+# Case 6: Duplicates (only the FIRST match is removed)
+dup_test = LinkedList()
+for value in [1, 2, 2, 3]:
+    dup_test.insert_end(value)
+print(dup_test.delete(2))                # True
+print(dup_test.to_list())                # [1, 2, 3]
+
+# Case 7: Single-node list (delete the only node)
+single_test = LinkedList()
+single_test.insert_end(7)
+print(single_test.delete(7))             # True
+print(single_test.to_list())             # []
+print(single_test.head)                  # None
+
+# Case 8: Delete every node one by one
+drain_test = LinkedList()
+for value in [1, 2, 3]:
+    drain_test.insert_end(value)
+print(drain_test.delete(2), drain_test.delete(1), drain_test.delete(3))  # True True True
+print(drain_test.delete(1))              # False (list is empty now)
+print(drain_test.to_list())              # []
 print("-------Length------")
 print(my_list.length())
 my_list.insert_end(4)
