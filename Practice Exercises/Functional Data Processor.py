@@ -46,4 +46,4 @@ product_categories = {product["category"] for product in products}
 by_category = {category: [product for product in products if product["category"] == category] for category in product_categories}
 pprint(by_category)
 
-
+# & (Join - Path(npm.cmd prefix -g)'codex.cmd') --sandbox read-only
